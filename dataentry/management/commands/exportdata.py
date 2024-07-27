@@ -1,16 +1,15 @@
 import csv
 from django.core.management.base import BaseCommand
-import datetime
 from django.apps import apps
+import datetime
+from dataentry.utils import generate_csv_file
 
-
+# propsed command = python manage.py exportdata model_name
 class Command(BaseCommand):
-    help = 'Export data from student model to a csv file'
+    help = 'Export data from the database to a CSV file'
 
     def add_arguments(self, parser):
         parser.add_argument('model_name', type=str, help='Model name')
-
-    
 
     def handle(self, *args, **kwargs):
         model_name = kwargs['model_name'].capitalize()
@@ -27,12 +26,12 @@ class Command(BaseCommand):
         if not model:
             self.stderr.write(f'Model {model_name} cound not found')
             return
-
-        data = model.objects.all()
         
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        # fetch the data from the database
+        data = model.objects.all()
 
-        file_path = f'Exported_{model_name}_data_{timestamp}.csv'
+        # generate csv file path
+        file_path = generate_csv_file(model_name)
 
         # open the csv file and write the data
         with open(file_path, 'w', newline='') as file:
@@ -42,6 +41,7 @@ class Command(BaseCommand):
             # we want to print the field names of the model that we are trying to export
             writer.writerow([field.name for field in model._meta.fields])
 
+            # write data rows
             for dt in data:
                 writer.writerow([getattr(dt, field.name) for field in model._meta.fields])
         
