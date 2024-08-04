@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-t*6p5t*%ucte!(*&dr5a-3flmej=-fk$4ufd39h6og9)t$pt#i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'uploads',
     'crispy_forms',
     'crispy_bootstrap5',
+    'emails',
+    'ckeditor',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -154,13 +157,35 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 
 #email sending
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+#EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = 'admin@rgian.com'
+#DEFAULT_TO_EMAIL = 'rahulgcan@gmail.com'
+
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 200,
+    },
+}
+
+
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": "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",
+}
+DEFAULT_FROM_EMAIL = 'admin@rgian.com'
 DEFAULT_TO_EMAIL = 'rahulgcan@gmail.com'
 
 
+#for ngrok login - for testing
 
+CSRF_TRUSTED_ORIGINS = ['https://7f13-142-186-133-155.ngrok-free.app']
+BASE_URL = 'https://7f13-142-186-133-155.ngrok-free.app'
