@@ -179,7 +179,7 @@ CKEDITOR_CONFIGS = {
 
 EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": "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",
+    "SENDINBLUE_API_KEY": config("SENDINBLUE_API_KEY"),
 }
 DEFAULT_FROM_EMAIL = 'admin@rgian.com'
 DEFAULT_TO_EMAIL = 'rahulgcan@gmail.com'
