@@ -13,11 +13,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 
 from pathlib import Path
-from decouple import config
+#from decouple import config
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -34,6 +37,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'anymail',
     'image_compression',
+    'stockanalysis',
 ]
 
 MIDDLEWARE = [
@@ -180,7 +186,7 @@ CKEDITOR_CONFIGS = {
 
 EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 ANYMAIL = {
-    "SENDINBLUE_API_KEY": config("SENDINBLUE_API_KEY"),
+    "SENDINBLUE_API_KEY": os.getenv("SENDINBLUE_API_KEY"),
 }
 DEFAULT_FROM_EMAIL = 'admin@rgian.com'
 DEFAULT_TO_EMAIL = 'rahulgcan@gmail.com'
